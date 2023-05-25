@@ -18,7 +18,7 @@ export class dbModel implements IdbModel {
                     isServerUp:String
                     getUrl(id:String!): Url
                     getUrls:[Url]
-                }
+                    }
 
                 type Mutation{
                     addUrl(id:String!

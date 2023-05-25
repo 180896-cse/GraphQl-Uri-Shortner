@@ -1,4 +1,4 @@
-let curntURL = document.location.href;
+let getCurntURL = document.location.href;
 let srvrChKBtn = document.getElementById("serverChkBtn");
 let srvrUpRespBox = document.getElementById("ServerUpMsg");
 let sbmtBtn = document.getElementById("sbmt");
@@ -9,6 +9,11 @@ let resShrtUrl = document.getElementById("shortUrl");
 // let actualUrl = document.getElementById("actualUrl");
 
 
+// function to crate random id every time
+function prducRand(){
+  const result = Math.random().toString(36).substring(2,7);
+  return result;
+}
 
 
 // getting query from url which is "ID" in our case
@@ -45,7 +50,7 @@ async function loadaddURL() {
   const response = await fetch("http://localhost:3004/", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify( {query:`mutation {addUrl(id:"${urlID.value}",Link:"${url.value}"){id}}`}),
+    body: JSON.stringify( {query:`mutation {addUrl(id:"${prducRand()}",Link:"${url.value}"){id}}`}),
   });
   const resp = await response.json();
   return resp;
@@ -53,7 +58,7 @@ async function loadaddURL() {
 
 sbmtBtn.addEventListener("click", async () => {
   const resp =  await loadaddURL();
-  resShrtUrl.value = curntURL+`?id=${resp.data.addUrl.id}`;
+  resShrtUrl.value = getCurntURL+`?id=${resp.data.addUrl.id}`;
  
    return resp;
 });
