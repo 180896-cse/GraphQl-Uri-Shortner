@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body onload="checkQuryID()">
+   
+   
+    <section>
+        <form  action='/' method="POST">
+            <h1>URL SHORTNER</h1>
+            <h3>URL Details</h3>
+            <input style="margin-bottom: 4px;" type="text" class="form-control" id="urlID" placeholder="Enter URL ID">
+            <br/>
+            <input style="margin-bottom: 4px;" type="text" class="form-control" id="urlBox" placeholder="Enter your URL">
+            <br/>
+         </form>
+        <button id="sbmt" >Generate ShortURL</button>
+        <input style="margin-bottom: 4px;" type="text" class="form-control" id="shortUrl" placeholder="Your Shortend URL">
+          <br/>
+          <!-- <button id="shrtURL" >Console ActualURL</button>
+          <input style="margin-bottom: 4px;" type="text" class="form-control" id="actualUrl" placeholder="Your Actual URL"> -->
+     </section>
+
+     <br/>
+
+     <button style=" margin-bottom: 4px;" id = "serverChkBtn" >Server Check</button>
+     <br/>
+     <input style="color: red; font-weight: bolder;" type="text" name="ServerUpMsg" id="ServerUpMsg" />
+
+     <script src="./index.js"></script>
+</body>
+</html>
+
