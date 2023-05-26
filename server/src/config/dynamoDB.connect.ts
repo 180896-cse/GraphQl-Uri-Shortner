@@ -1,5 +1,4 @@
 import  AWS  from "aws-sdk";
-import path from "path";
 
 
 

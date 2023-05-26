@@ -1,13 +1,13 @@
 let getCurntURL = document.location.href;
-let srvrChKBtn = document.getElementById("serverChkBtn");
-let srvrUpRespBox = document.getElementById("ServerUpMsg");
-let sbmtBtn = document.getElementById("sbmt");
-let urlID = document.getElementById("urlID");
-let url =  document.getElementById("urlBox");
-let resShrtUrl = document.getElementById("shortUrl");
-// let srtURL = document.getElementById("shrtURL");
-// let actualUrl = document.getElementById("actualUrl");
 
+let usrUrl =  document.getElementById("usrUrlInput");
+let sbmtBtn = document.getElementById("sbmtBtn");
+let finalUrl = document.getElementById("finalUrl");
+let srvrStsChkBtn = document.getElementById("serverChkBtn");
+let srvrUpRespBox = document.getElementById("isServerUpMsg");
+
+
+//helper Function
 
 // function to crate random id every time
 function prducRand(){
@@ -17,7 +17,7 @@ function prducRand(){
 
 
 // getting query from url which is "ID" in our case
-function getQueryVal() {
+function getQuryFrmCurrUrl() {
   let resUrlQuery = document.location.search;
   const urlParams = new URLSearchParams(resUrlQuery);
   resID = urlParams.get("id");
@@ -26,27 +26,30 @@ function getQueryVal() {
 
 
 
-async function loadisServerUp() {
+
+
+
+async function isServerUp() {
   const response = await fetch("http://localhost:3004/", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ query: "{isServerUp}" }),
   });
   const resp = await response.json();
-  console.log(resp.data.isServerUp);
+  // console.log(resp.data.isServerUp);
   return resp;
 }
 
-srvrChKBtn.addEventListener("click", async () => {
-  const resp =  await loadisServerUp();
+srvrStsChkBtn.addEventListener("click", async () => {
+  const resp =  await isServerUp();
   srvrUpRespBox.value = resp.data.isServerUp;
 });
 
 
 
 
-
-async function loadaddURL() {
+// function for adding usrl to DB Backend
+async function addURL() {
   const response = await fetch("http://localhost:3004/", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -57,38 +60,33 @@ async function loadaddURL() {
 }
 
 sbmtBtn.addEventListener("click", async () => {
-  const resp =  await loadaddURL();
-  resShrtUrl.value = getCurntURL+`?id=${resp.data.addUrl.id}`;
+  let val = usrUrl.value.trim();
+  if((val!=null) && (val!="")){
+  const resp =  await addURL();
+  finalUrl.value = getCurntURL+`?id=${resp.data.addUrl.id}`;
  
    return resp;
+  }else{alert("Please Enter URL")}
 });
 
 
 
 
-
+// Function for getting shortend URL
 async function getSrtURL(){
  const response = await fetch("http://localhost:3004/",{
   method: "POST",
   headers: { "content-type": "application/json" },
-  body: JSON.stringify( {query:`query {getUrl(id:"${getQueryVal()}"){Link}}`}),
+  body: JSON.stringify( {query:`query {getUrl(id:"${getQuryFrmCurrUrl()}"){Link}}`}),
  });
  const resp = await response.json();
 return resp.data.getUrl.Link;
 }
 
-// srtURL.addEventListener("click", async () => {
-//   const resp =  await getSrtURL();
-//   actualUrl.value = resp;
-// });
-
-
 
 
 async function checkQuryID(){
-
-  if(getQueryVal()){document.location = await getSrtURL();}
-
+  if(getQuryFrmCurrUrl()){document.location = await getSrtURL();}
 }
 
 
