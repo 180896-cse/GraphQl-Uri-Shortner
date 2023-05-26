@@ -90,3 +90,14 @@ async function checkQuryID(){
 }
 
 
+function outrFunc(){
+  let Avar = 0;
+  function innFunc(){
+      console.log(++Avar);
+  }
+  return innFunc();
+}
+function clntFunc(param1){
+  param1;
+}
+clntFunc(outrFunc());
